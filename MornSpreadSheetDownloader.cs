@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace MornSpreadSheet
+namespace MornLib
 {
     /// <summary>エディタ専用のスプレッドシートダウンロード機能</summary>
     public static class MornSpreadSheetDownloader
@@ -20,14 +20,14 @@ namespace MornSpreadSheet
         }
 
         /// <summary>スプレッドシートをロード</summary>
-        public async static UniTask<MornSpreadSheet> LoadSheetAsync(string sheetId, string sheetName,
+        public async static UniTask<MornLib.MornSpreadSheet> LoadSheetAsync(string sheetId, string sheetName,
             CancellationToken cancellationToken = default)
         {
             var url = $"https://docs.google.com/spreadsheets/d/{sheetId}/gviz/tq?tqx=out:csv&sheet={sheetName}";
             return await LoadSheetFromUrlAsync(sheetName, url, cancellationToken);
         }
 
-        private async static UniTask<MornSpreadSheet> LoadSheetFromUrlAsync(string sheetName, string url,
+        private async static UniTask<MornLib.MornSpreadSheet> LoadSheetFromUrlAsync(string sheetName, string url,
             CancellationToken cancellationToken = default)
         {
             MornSpreadSheetGlobal.Log($"ダウンロード開始:{url}");
@@ -37,7 +37,7 @@ namespace MornSpreadSheet
             {
                 var resultText = req.downloadHandler.text;
                 MornSpreadSheetGlobal.Log($"ダウンロード成功:\n{resultText}");
-                if (MornSpreadSheet.TryConvert(sheetName, resultText, out var result))
+                if (MornLib.MornSpreadSheet.TryConvert(sheetName, resultText, out var result))
                 {
                     return result;
                 }
@@ -58,7 +58,7 @@ namespace MornSpreadSheet
             {
                 await UniTask.SwitchToMainThread();
                 MornSpreadSheetGlobal.Log("<size=30>タスク開始</size>");
-                var sheets = new List<MornSpreadSheet>();
+                var sheets = new List<MornLib.MornSpreadSheet>();
                 var totalCount = master.SheetNames.Count;
                 for (var i = 0; i < totalCount; i++)
                 {

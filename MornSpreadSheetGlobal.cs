@@ -1,13 +1,12 @@
 using System.Runtime.CompilerServices;
-using MornGlobal;
 using UnityEngine;
 
 [assembly: InternalsVisibleTo("MornSpreadSheet.Editor")]
-namespace MornSpreadSheet
+namespace MornLib
 {
     internal sealed class MornSpreadSheetGlobal : MornGlobalPureBase<MornSpreadSheetGlobal>
     {
-        protected override string ModuleName => nameof(MornSpreadSheet);
+        protected override string ModuleName => "MornSpreadSheet";
 
         internal static void Log(string message)
         {
@@ -23,7 +22,7 @@ namespace MornSpreadSheet
         {
             I.LogErrorInternal(message);
         }
-        
+
         internal static void SetDirty(Object target)
         {
             I.SetDirtyInternal(target);

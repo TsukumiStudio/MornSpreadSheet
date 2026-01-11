@@ -1,6 +1,6 @@
 {
     "name": "MornSpreadSheet",
-    "rootNamespace": "MornSpreadSheet",
+    "rootNamespace": "MornLib",
     "references": [
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
         "GUID:dadc2fee866e04157b6aa9c8ff475e67",

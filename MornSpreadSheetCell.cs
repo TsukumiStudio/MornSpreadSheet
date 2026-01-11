@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace MornSpreadSheet
+namespace MornLib
 {
     [Serializable]
     public struct MornSpreadSheetCell

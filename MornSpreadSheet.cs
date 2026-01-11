@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace MornSpreadSheet
+namespace MornLib
 {
     [Serializable]
     public sealed class MornSpreadSheet
@@ -40,7 +40,7 @@ namespace MornSpreadSheet
                 result = null;
                 return false;
             }
-            
+
             var cells = new MornSpreadSheetCell[rowCount, colCount];
             for (var i = 0; i < rowCount; i++)
             {
@@ -62,7 +62,7 @@ namespace MornSpreadSheet
                     cells[0, i] = new MornSpreadSheetCell(clampedValue);
                 }
             }
-            
+
             // 1行目が#で始まる/空欄の場合はコメント行として無視する
             var ignoreColHashSet = new HashSet<int>();
             for (var i = 0; i < colCount; i++)
@@ -71,7 +71,7 @@ namespace MornSpreadSheet
                 {
                     ignoreColHashSet.Add(i);
                 }
-                
+
                 if (string.IsNullOrEmpty(cells[0, i].AsString()))
                 {
                     ignoreColHashSet.Add(i);
@@ -87,7 +87,7 @@ namespace MornSpreadSheet
                     ignoreRowHashSet.Add(i);
                 }
             }
-            
+
             // 全ての列が空白の場合は無視する
             for (var i = 0; i < rowCount; i++)
             {
@@ -98,7 +98,7 @@ namespace MornSpreadSheet
                     {
                         continue;
                     }
-                    
+
                     if (!string.IsNullOrWhiteSpace(cells[i, j].AsString()))
                     {
                         allEmpty = false;
@@ -113,8 +113,7 @@ namespace MornSpreadSheet
             }
 
             // 無視する行と列を除外する
-            var newCells =
-                new MornSpreadSheetCell[rowCount - ignoreRowHashSet.Count, colCount - ignoreColHashSet.Count];
+            var newCells = new MornSpreadSheetCell[rowCount - ignoreRowHashSet.Count, colCount - ignoreColHashSet.Count];
             var newRow = 0;
             for (var i = 0; i < rowCount; i++)
             {
@@ -141,11 +140,7 @@ namespace MornSpreadSheet
             cells = newCells;
             rowCount = cells.GetLength(0);
             colCount = cells.GetLength(1);
-            result = new MornSpreadSheet
-            {
-                _sheetName = sheetName,
-                _rows = new List<MornSpreadSheetRow>(rowCount),
-            };
+            result = new MornSpreadSheet { _sheetName = sheetName, _rows = new List<MornSpreadSheetRow>(rowCount), };
             for (var i = 0; i < rowCount; i++)
             {
                 var row = new MornSpreadSheetRow();
@@ -170,11 +165,9 @@ namespace MornSpreadSheet
             var currentField = new StringBuilder();
             var inQuotes = false;
             var i = 0;
-
             while (i < csvData.Length)
             {
                 var c = csvData[i];
-
                 if (inQuotes)
                 {
                     if (c == '"')
@@ -227,7 +220,6 @@ namespace MornSpreadSheet
                         rows.Add(new List<string>(currentRow));
                         currentRow.Clear();
                         currentField.Clear();
-                        
                         if (c == '\r')
                         {
                             i += 2; // \r\nをスキップ
@@ -236,6 +228,7 @@ namespace MornSpreadSheet
                         {
                             i++;
                         }
+
                         continue;
                     }
                     else if (c == '\r')
@@ -263,6 +256,7 @@ namespace MornSpreadSheet
             {
                 currentRow.Add(currentField.ToString());
             }
+
             if (currentRow.Count > 0)
             {
                 rows.Add(currentRow);

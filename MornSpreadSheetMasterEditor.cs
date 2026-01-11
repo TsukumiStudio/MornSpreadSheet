@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace MornSpreadSheet
+namespace MornLib
 {
     [CustomEditor(typeof(MornSpreadSheetMaster))]
     internal sealed class MornSpreadSheetMasterEditor : Editor

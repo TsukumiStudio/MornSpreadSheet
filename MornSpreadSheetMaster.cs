@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace MornSpreadSheet
+namespace MornLib
 {
     [CreateAssetMenu(fileName = nameof(MornSpreadSheetMaster), menuName = "Morn/" + nameof(MornSpreadSheetMaster))]
     public sealed class MornSpreadSheetMaster : ScriptableObject
@@ -10,8 +10,8 @@ namespace MornSpreadSheet
         [SerializeField] private string _sheetId;
         [SerializeField] private string _getSheetNameApiUrl;
         [SerializeField] private List<string> _sheetNames;
-        [SerializeField] private List<MornSpreadSheet> _sheets;
-        public IEnumerable<MornSpreadSheet> Sheets => _sheets;
+        [SerializeField] private List<MornLib.MornSpreadSheet> _sheets;
+        public IEnumerable<MornLib.MornSpreadSheet> Sheets => _sheets;
         public string SheetId => _sheetId;
         public IReadOnlyList<string> SheetNames => _sheetNames;
         internal string GetSheetNameApiUrl => _getSheetNameApiUrl;
@@ -31,7 +31,7 @@ namespace MornSpreadSheet
         }
 
         /// <summary>シートリストを更新</summary>
-        public void SetSheets(List<MornSpreadSheet> sheets)
+        public void SetSheets(List<MornLib.MornSpreadSheet> sheets)
         {
             _sheets = sheets;
             MornSpreadSheetGlobal.SetDirty(this);
