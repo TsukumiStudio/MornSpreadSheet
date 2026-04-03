@@ -25,7 +25,7 @@ namespace MornLib
         {
             if (colIdx < 1 || colIdx > _cells.Count)
             {
-                MornSpreadSheetGlobal.LogError($"範囲外です。{colIdx}{_cells.Count}列");
+                MornSpreadSheetGlobal.Logger.LogError($"範囲外です。{colIdx}{_cells.Count}列");
                 cell = default(MornSpreadSheetCell);
                 return false;
             }
