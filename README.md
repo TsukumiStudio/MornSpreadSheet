@@ -1,51 +1,31 @@
 # MornSpreadSheet
 
+<p align="center">
+  <img src="src/Editor/MornSpreadSheet.png" alt="MornSpreadSheet" width="640" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/license/TsukumiStudio/MornSpreadSheet" alt="License" />
+</p>
+
 ## 概要
 
-Googleスプレッドシートのダウンロードとデータ管理を行うライブラリ。
+Google Sheets から CSV でデータを取得し、マスターデータとして扱うための Unity 向けローダー。Editor 上でダウンロード、ScriptableObject へ保存、GAS テンプレート付属。
 
-## 依存関係
+## 導入方法
 
-| 種別 | 名前 |
-|------|------|
-| 外部パッケージ | UniTask |
-| Mornライブラリ | MornGlobal |
+Unity Package Manager で以下の Git URL を追加:
 
-## 使い方
-
-### セットアップ
-
-1. Projectウィンドウで右クリック → `Morn/MornSpreadSheetMaster` を作成
-2. `SheetId` にスプレッドシートのIDを設定
-3. `SheetNames` にダウンロードしたいシート名を追加
-4. InspectorのDownloadボタンでシートをダウンロード
-
-### シートのダウンロード（エディタ専用）
-
-```csharp
-await master.DownloadSheetsWithProgressAsync();
-var sheet = await MornSpreadSheetDownloader.LoadSheetAsync(sheetId, sheetName);
+```
+https://github.com/TsukumiStudio/MornSpreadSheet.git?path=src#1.0.0
 ```
 
-### セルの取得
+`Window > Package Manager > + > Add package from git URL...` に貼り付けてください。
 
-```csharp
-// 行と列を指定（1始まり）
-MornSpreadSheetCell cell = sheet.Get(rowIdx: 1, colIdx: 1);
-MornSpreadSheetRow row = sheet.GetRow(1);
-```
+### 依存パッケージ
 
-### セルの値変換
+- [UniTask](https://github.com/Cysharp/UniTask) (`com.cysharp.unitask`)
 
-```csharp
-cell.AsString();
-cell.AsInt();
-cell.AsFloat();
-cell.AsBool();
-```
+## ライセンス
 
-### CSV解析仕様
-
-- RFC 4180準拠のCSV解析
-- `#` で始まる行/列はコメントとして無視
-- 空白行は自動スキップ
+[The Unlicense](LICENSE)

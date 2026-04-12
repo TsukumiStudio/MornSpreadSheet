@@ -30,23 +30,23 @@ namespace MornLib
         private async static UniTask<MornLib.MornSpreadSheet> LoadSheetFromUrlAsync(string sheetName, string url,
             CancellationToken cancellationToken = default)
         {
-            MornSpreadSheetGlobal.Logger.Log($"ダウンロード開始:{url}");
+            MornSpreadSheetUtil.Log($"ダウンロード開始:{url}");
             using var req = UnityWebRequest.Get(url);
             await req.SendWebRequest().WithCancellation(cancellationToken);
             if (req.result == UnityWebRequest.Result.Success)
             {
                 var resultText = req.downloadHandler.text;
-                MornSpreadSheetGlobal.Logger.Log($"ダウンロード成功:\n{resultText}");
+                MornSpreadSheetUtil.Log($"ダウンロード成功:\n{resultText}");
                 if (MornLib.MornSpreadSheet.TryConvert(sheetName, resultText, out var result))
                 {
                     return result;
                 }
 
-                MornSpreadSheetGlobal.Logger.LogError("変換失敗");
+                MornSpreadSheetUtil.LogError("変換失敗");
                 return null;
             }
 
-            MornSpreadSheetGlobal.Logger.LogError($"ダウンロード失敗:{req.error}");
+            MornSpreadSheetUtil.LogError($"ダウンロード失敗:{req.error}");
             return null;
         }
 
@@ -57,7 +57,7 @@ namespace MornLib
             try
             {
                 await UniTask.SwitchToMainThread();
-                MornSpreadSheetGlobal.Logger.Log("<size=30>タスク開始</size>");
+                MornSpreadSheetUtil.Log("<size=30>タスク開始</size>");
                 var sheets = new List<MornLib.MornSpreadSheet>();
                 var totalCount = master.SheetNames.Count;
                 for (var i = 0; i < totalCount; i++)
@@ -98,17 +98,17 @@ namespace MornLib
                 AssetDatabase.SaveAssets();
                 if (!cancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    MornSpreadSheetGlobal.Logger.Log("<size=30>タスク完了</size>");
+                    MornSpreadSheetUtil.Log("<size=30>タスク完了</size>");
                 }
             }
             catch (OperationCanceledException)
             {
-                MornSpreadSheetGlobal.Logger.Log("<size=30>タスクがキャンセルされました</size>");
+                MornSpreadSheetUtil.Log("<size=30>タスクがキャンセルされました</size>");
             }
             catch (Exception ex)
             {
                 EditorUtility.DisplayDialog("エラー", $"エラーが発生しました: {ex.Message}", "OK");
-                MornSpreadSheetGlobal.Logger.LogError($"タスク中にエラーが発生しました: {ex}");
+                MornSpreadSheetUtil.LogError($"タスク中にエラーが発生しました: {ex}");
             }
             finally
             {
@@ -124,11 +124,11 @@ namespace MornLib
             try
             {
                 await UniTask.SwitchToMainThread();
-                MornSpreadSheetGlobal.Logger.Log("<size=30>タスク開始</size>");
+                MornSpreadSheetUtil.Log("<size=30>タスク開始</size>");
                 var result = new List<string>();
                 if (string.IsNullOrEmpty(master.GetSheetNameApiUrl))
                 {
-                    MornSpreadSheetGlobal.Logger.LogWarning("シート名を取得するURLが設定されていません");
+                    MornSpreadSheetUtil.LogWarning("シート名を取得するURLが設定されていません");
                     return;
                 }
 
@@ -159,16 +159,16 @@ namespace MornLib
                     // シート名を設定
                     master.SetSheetNames(result);
                     AssetDatabase.SaveAssets();
-                    MornSpreadSheetGlobal.Logger.Log("<size=30>タスク終了</size>");
+                    MornSpreadSheetUtil.Log("<size=30>タスク終了</size>");
                 }
                 else if (request.result != UnityWebRequest.Result.Success)
                 {
-                    MornSpreadSheetGlobal.Logger.LogError($"シート名の取得失敗：{request.error}");
+                    MornSpreadSheetUtil.LogError($"シート名の取得失敗：{request.error}");
                 }
             }
             catch (OperationCanceledException)
             {
-                MornSpreadSheetGlobal.Logger.Log("シート名の取得がキャンセルされました");
+                MornSpreadSheetUtil.Log("シート名の取得がキャンセルされました");
             }
             finally
             {
