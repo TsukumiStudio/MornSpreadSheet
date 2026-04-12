@@ -27,14 +27,14 @@ namespace MornLib
         {
             _sheetNames.Clear();
             _sheetNames.AddRange(sheetNames);
-            MornGlobalUtil.SetDirty(this);
+            MornSpreadSheetUtil.SetDirty(this);
         }
 
         /// <summary>シートリストを更新</summary>
         public void SetSheets(List<MornLib.MornSpreadSheet> sheets)
         {
             _sheets = sheets;
-            MornGlobalUtil.SetDirty(this);
+            MornSpreadSheetUtil.SetDirty(this);
         }
 
         public async UniTask UpdateSheetNamesWithProgressAsync()

@@ -28,7 +28,7 @@ namespace MornLib
             var rowCount = parsedRows.Count;
             if (rowCount == 0)
             {
-                MornSpreadSheetGlobal.Logger.LogError("データがありません。");
+                MornSpreadSheetUtil.LogError("データがありません。");
                 result = null;
                 return false;
             }
@@ -36,7 +36,7 @@ namespace MornLib
             var colCount = parsedRows[0].Count;
             if (colCount == 0)
             {
-                MornSpreadSheetGlobal.Logger.LogError("データがありません。");
+                MornSpreadSheetUtil.LogError("データがありません。");
                 result = null;
                 return false;
             }
@@ -276,7 +276,7 @@ namespace MornLib
         {
             if (rowIdx < 1 || rowIdx > _rows.Count)
             {
-                MornSpreadSheetGlobal.Logger.LogError($"範囲外です。{rowIdx}/{_rows.Count}行");
+                MornSpreadSheetUtil.LogError($"範囲外です。{rowIdx}/{_rows.Count}行");
                 return default(MornSpreadSheetCell);
             }
 
@@ -289,7 +289,7 @@ namespace MornLib
         {
             if (rowIdx < 1 || rowIdx > _rows.Count)
             {
-                MornSpreadSheetGlobal.Logger.LogError($"範囲外です。{rowIdx}/{_rows.Count}行");
+                MornSpreadSheetUtil.LogError($"範囲外です。{rowIdx}/{_rows.Count}行");
                 return null;
             }
 
