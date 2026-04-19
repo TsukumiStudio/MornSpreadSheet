@@ -8,13 +8,13 @@ namespace MornLib
     public sealed class MornSpreadSheetMaster : ScriptableObject
     {
         [SerializeField] private string _sheetId;
-        [SerializeField] private string _getSheetNameApiUrl;
+        [SerializeField] private string _apiUrl;
         [SerializeField] private List<string> _sheetNames;
         [SerializeField] private List<MornLib.MornSpreadSheet> _sheets;
         public IEnumerable<MornLib.MornSpreadSheet> Sheets => _sheets;
         public string SheetId => _sheetId;
         public IReadOnlyList<string> SheetNames => _sheetNames;
-        internal string GetSheetNameApiUrl => _getSheetNameApiUrl;
+        internal string ApiUrl => _apiUrl;
 
         public void Open()
         {

@@ -1,6 +1,6 @@
 {
   "name": "com.tsukumistudio.mornspreadsheet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "MornSpreadSheet",
   "description": "Google Sheets から CSV でデータを取得し、マスターデータとして扱うための Unity 向けローダー。Editor 上でダウンロード、ScriptableObject へ保存、GAS テンプレート付属。",
   "unity": "6000.0",
