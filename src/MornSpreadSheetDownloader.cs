@@ -57,7 +57,6 @@ namespace MornLib
             try
             {
                 await UniTask.SwitchToMainThread();
-                MornSpreadSheetUtil.Log("<size=30>タスク開始</size>");
                 var sheets = new List<MornLib.MornSpreadSheet>();
                 var totalCount = master.SheetNames.Count;
                 for (var i = 0; i < totalCount; i++)
@@ -96,14 +95,9 @@ namespace MornLib
                 // 内部メソッドを使って更新
                 master.SetSheets(sheets);
                 AssetDatabase.SaveAssets();
-                if (!cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    MornSpreadSheetUtil.Log("<size=30>タスク完了</size>");
-                }
             }
             catch (OperationCanceledException)
             {
-                MornSpreadSheetUtil.Log("<size=30>タスクがキャンセルされました</size>");
             }
             catch (Exception ex)
             {
@@ -124,15 +118,17 @@ namespace MornLib
             try
             {
                 await UniTask.SwitchToMainThread();
-                MornSpreadSheetUtil.Log("<size=30>タスク開始</size>");
                 var result = new List<string>();
-                if (string.IsNullOrEmpty(master.GetSheetNameApiUrl))
+                if (string.IsNullOrEmpty(master.ApiUrl))
                 {
-                    MornSpreadSheetUtil.LogWarning("シート名を取得するURLが設定されていません");
+                    MornSpreadSheetUtil.LogWarning("ApiUrlが設定されていません");
                     return;
                 }
 
-                using var request = UnityWebRequest.Get(master.GetSheetNameApiUrl);
+                var apiUrl = master.ApiUrl;
+                var separator = apiUrl.Contains("?") ? "&" : "?";
+                var requestUrl = $"{apiUrl}{separator}action=getSheetNames";
+                using var request = UnityWebRequest.Get(requestUrl);
                 var operation = request.SendWebRequest();
                 while (!operation.isDone)
                 {
@@ -159,7 +155,6 @@ namespace MornLib
                     // シート名を設定
                     master.SetSheetNames(result);
                     AssetDatabase.SaveAssets();
-                    MornSpreadSheetUtil.Log("<size=30>タスク終了</size>");
                 }
                 else if (request.result != UnityWebRequest.Result.Success)
                 {
